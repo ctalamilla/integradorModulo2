@@ -10,7 +10,19 @@ Por último, nuestro objeto literal debe tener un atributo llamado autos que con
 
 let autos = require("./autos");
 
-const concesionaria = {
-    autos: autos
+let concesionaria = {
+    autos: autos,
+    buscarAuto: function(patente){
+        let resultado = concesionaria.autos.filter(auto => auto.patente === patente);
+        return resultado.length == !0 ? resultado[0] : null // ternario
+/*         if(resultado.length !=0){ 
+            return resultado
+        } else { 
+                return null 
+            } */
+    }    
 }
+
+console.log(concesionaria.buscarAuto("APL123"))
+
 
