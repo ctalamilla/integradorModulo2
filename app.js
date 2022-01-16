@@ -33,7 +33,7 @@ Recordatorio: Para comenzar tenés que agregar el código que escribiste en el e
 
 */
 
-let autos = require("./autos");
+/* let autos = require("./autos");
 
 let concesionaria = {
     autos: autos,
@@ -51,7 +51,39 @@ let concesionaria = {
     }
 
 concesionaria.venderAuto("APL123")
-console.log(concesionaria.buscarAuto("APL123"))
+console.log(concesionaria.buscarAuto("APL123")) */
 
+/* Funciones extras
+
+La primera es poder contar, como concesionaria, con la habilidad de poder tener la lista de autos para la venta. A lo cual, María, cree que es una tarea sencilla que Juan y vos pueden encarar solos, usando la función autosParaLaVenta, aunque por las dudas ella les recuerda que no deberían de aparecer los autos que ya fueron vendidos.
+
+Para comenzar, tenés que agregar el código que escribiste en el ejercicio anterior. Tené en cuenta que estamos optimizando nuestro código, por lo cual, deberíamos utilizar el método filter.
+*/
+
+let autos = require("./autos");
+
+let concesionaria = {
+    autos: autos,
+    
+    buscarAuto: function(patente){
+        let resultado = concesionaria.autos.filter(auto => auto.patente === patente);
+        return resultado.length == !0 ? resultado[0] : null; // ternario
+    },
+
+    venderAuto: function(patente){
+         let autoBuscado = this.buscarAuto(patente);
+         autoBuscado.vendido = true;
+    },
+
+    autosParaLaVenta: function(){
+        return this.autos.filter(autos=> autos.vendido === false)
+
+    },
+
+    }
+
+console.log(concesionaria.autos)
+concesionaria.venderAuto('APL123')
+console.log(concesionaria.autosParaLaVenta())
 
 
