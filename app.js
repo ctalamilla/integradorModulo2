@@ -97,7 +97,7 @@ Para comenzar, tenés que agregar el código que escribiste en el ejercicio ante
 
 */
 
-let autos = require("./autos");
+/* let autos = require("./autos");
 
 let concesionaria = {
     autos: autos,
@@ -125,4 +125,106 @@ let concesionaria = {
     }
 
 console.log(concesionaria.autos)
-console.log(concesionaria.autosNuevos())
+console.log(concesionaria.autosNuevos()) */
+
+/* Mas funcionalidades
+
+
+El cliente le pidió saber cuánto dinero generaron las ventas.
+
+María te pide que completes la función listaDeVentas que devuelve una lista que contiene el precio de venta de cada auto vendido. A esto, Juan, que está al lado tuyo, se le escapa la frase "mmm.....estoy seguro que alguna función de arrays nos va a servir, pero no me acuerdo".
+
+Para comenzar tenés que agregar el código que escribiste en el ejercicio anterior.
+
+*/
+/* 
+let autos = require("./autos");
+
+let concesionaria = {
+    autos: autos,
+    
+    buscarAuto: function(patente){
+        let resultado = concesionaria.autos.filter(auto => auto.patente === patente);
+        return resultado.length == !0 ? resultado[0] : null; // ternario
+    },
+
+    venderAuto: function(patente){
+         let autoBuscado = this.buscarAuto(patente);
+         autoBuscado.vendido = true;
+    },
+
+    autosParaLaVenta: function(){
+        return this.autos.filter(autos=> autos.vendido === false)
+
+    },
+
+    autosNuevos: function(){
+         let autosParaVender =  this.autosParaLaVenta();
+         return autosParaVender.filter(autos=> autos.km<100)
+    },
+
+    listaDeVentas: function(){
+        let autosVendidos = this.autos.filter(autos=> autos.vendido === true)
+         return autosVendidos.map(autos=> autos.precio)
+    },
+
+    }
+console.log(concesionaria.autos)
+
+concesionaria.venderAuto('APL123')
+concesionaria.venderAuto('JJK116')
+console.log(concesionaria.autos)
+console.log(concesionaria.listaDeVentas())
+ */
+
+
+
+
+/* Total de ventas
+Terminada esta función, María te pide que resuelvas la funcionalidad de totalDeVentas, que justamente nos devuelva la sumatoria del valor de todas las ventas realizadas. Acá el único requerimiento técnico explícito es que utilices la función reduce, ¡a codear!
+*/
+
+let autos = require("./autos");
+
+let concesionaria = {
+    autos: autos,
+    
+    buscarAuto: function(patente){
+        let resultado = concesionaria.autos.filter(auto => auto.patente === patente);
+        return resultado.length == !0 ? resultado[0] : null; // ternario
+    },
+
+    venderAuto: function(patente){
+         let autoBuscado = this.buscarAuto(patente);
+         autoBuscado.vendido = true;
+    },
+
+    autosParaLaVenta: function(){
+        return this.autos.filter(autos=> autos.vendido === false);
+
+    },
+
+    autosNuevos: function(){
+         let autosParaVender =  this.autosParaLaVenta();
+         return autosParaVender.filter(autos=> autos.km<100);
+    },
+
+    listaDeVentas: function(){
+        let autosVendidos = this.autos.filter(autos=> autos.vendido === true);
+         return autosVendidos.map(autos=> autos.precio);
+    },
+
+    totalDeVentas: function(){
+        let autosVendidos = this.listaDeVentas();
+        return autosVendidos.length === 0 ? 0 : autosVendidos.reduce( (acumulador, num) => acumulador+num )
+        
+
+    },
+
+    }
+console.log(concesionaria.autos)
+
+concesionaria.venderAuto('APL123')
+concesionaria.venderAuto('JJK116')
+console.log(concesionaria.autos)
+console.log(concesionaria.totalDeVentas())
