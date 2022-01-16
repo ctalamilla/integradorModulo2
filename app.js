@@ -60,7 +60,7 @@ La primera es poder contar, como concesionaria, con la habilidad de poder tener 
 Para comenzar, tenés que agregar el código que escribiste en el ejercicio anterior. Tené en cuenta que estamos optimizando nuestro código, por lo cual, deberíamos utilizar el método filter.
 */
 
-let autos = require("./autos");
+/* let autos = require("./autos");
 
 let concesionaria = {
     autos: autos,
@@ -84,6 +84,45 @@ let concesionaria = {
 
 console.log(concesionaria.autos)
 concesionaria.venderAuto('APL123')
-console.log(concesionaria.autosParaLaVenta())
+console.log(concesionaria.autosParaLaVenta()) */
+
+/* Nueva funcionalidad extra
 
 
+María, contenta con el trabajo que realizaron, les pide otra funcionalidad extra. Resulta que a la concesionaria le suelen preguntar muy seguido cuáles de los autos para la venta son 0 km. Tené en cuenta que María considera que un auto 0 km es aquel que tenga un kilometraje menor a 100. Vas a tener que desarrollar la funcionalidad autosNuevos.
+
+¿Cómo podés resolver esto reutilizando la función autosParaLaVenta?
+
+Para comenzar, tenés que agregar el código que escribiste en el ejercicio anterior.
+
+*/
+
+let autos = require("./autos");
+
+let concesionaria = {
+    autos: autos,
+    
+    buscarAuto: function(patente){
+        let resultado = concesionaria.autos.filter(auto => auto.patente === patente);
+        return resultado.length == !0 ? resultado[0] : null; // ternario
+    },
+
+    venderAuto: function(patente){
+         let autoBuscado = this.buscarAuto(patente);
+         autoBuscado.vendido = true;
+    },
+
+    autosParaLaVenta: function(){
+        return this.autos.filter(autos=> autos.vendido === false)
+
+    },
+
+    autosNuevos: function(){
+         let autosParaVender =  this.autosParaLaVenta();
+         return autosParaVender.filter(autos=> autos.km<100)
+    },
+
+    }
+
+console.log(concesionaria.autos)
+console.log(concesionaria.autosNuevos())
