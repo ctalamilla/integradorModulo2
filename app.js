@@ -229,6 +229,8 @@ concesionaria.venderAuto('JJK116')
 console.log(concesionaria.autos)
 console.log(concesionaria.totalDeVentas()) */
 
+
+
 /* Agregando funcionalidades 
 
 Muy contento el equipo por cómo viene el desarrollo, por la tarde, María te comenta que se agrega una funcionalidad muy importante: la de verificar si una persona puede comprar o no un auto. Esta permite al sistema definir si una persona al consultar por un auto, puede comprarlo. Las personas solo sacan los autos en cuotas y tomando dos factores como condición de compra. Una es el costo total: si el total de un auto excede lo que la persona considera caro, no va a comprar el auto. Otra condición es su capacidad de pago en cuotas: si la capacidad de pago en cuotas supera al costo de la cuota, va a poder pagarlo. Si ambas condiciones se cumplen, se realiza la compra.
@@ -247,7 +249,7 @@ Para comenzar tenés que agregar el código que escribiste en el ejercicio anter
 
 */
 
-let autos = require("./autos");
+/* let autos = require("./autos");
 
 let concesionaria = {
     autos: autos,
@@ -299,6 +301,73 @@ console.log(concesionaria.puedeComprar(autos[1], {
                                                 nombre: "Juan", 
                                                 capacidadDePagoEnCuotas: 20000, 
                                                 capacidadDePagoTotal: 100000}
-                                                ))
+                                                )) */
 
-                                                
+
+/*
+
+Agragando Funcionalidades *****LA ULTIMA ********
+
+*/
+
+
+
+let autos = require("./autos");
+
+let concesionaria = {
+    autos: autos,
+    
+    buscarAuto: function(patente){
+        let resultado = concesionaria.autos.filter(auto => auto.patente === patente);
+        return resultado.length == !0 ? resultado[0] : null; // ternario
+    },
+
+    venderAuto: function(patente){
+         let autoBuscado = this.buscarAuto(patente);
+         autoBuscado.vendido = true;
+    },
+
+    autosParaLaVenta: function(){
+        return this.autos.filter(autos=> autos.vendido === false);
+
+    },
+
+    autosNuevos: function(){
+         let autosParaVender =  this.autosParaLaVenta();
+         return autosParaVender.filter(autos=> autos.km<100);
+    },
+
+    listaDeVentas: function(){
+        let autosVendidos = this.autos.filter(autos=> autos.vendido === true);
+         return autosVendidos.map(autos=> autos.precio);
+    },
+
+    totalDeVentas: function(){
+        let autosVendidos = this.listaDeVentas();
+        return autosVendidos.length === 0 ? 0 : autosVendidos.reduce( (acumulador, num) => acumulador+num );
+    },
+
+    puedeComprar: function (autoSelec, personaSelec) {
+        let costoTtl = autoSelec.precio;
+        let costoCts = costoTtl / autoSelec.cuotas;
+        //console.log(costoCts);
+        //console.log(costoTtl);
+        return costoTtl <= personaSelec.capacidadDePagoTotal && costoCts <= personaSelec.capacidadDePagoEnCuotas ? true : false
+    },
+
+    autosQuePuedeComprar: function(personaSelec){
+        let autosEnVenta = this.autosParaLaVenta();
+        //let autosQuePuede = autosEnVenta.map(autos=> this.puedeComprar(autos, personaSelec));
+        let puedeComprar = autosEnVenta.filter((auto) => this.puedeComprar(auto,personaSelec) == true)
+        return  puedeComprar
+    }
+
+
+    }
+
+//console.log(concesionaria.autos)
+console.log(concesionaria.autosQuePuedeCompra({
+                                                nombre: "Juan", 
+                                                capacidadDePagoEnCuotas: 20000, 
+                                                capacidadDePagoTotal: 100000}
+                                                ))                                                
